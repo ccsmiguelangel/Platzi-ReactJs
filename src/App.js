@@ -65,40 +65,36 @@ function App() {
 
   return (
     <header className="App-header">
-      <Container className="mt-3">
-        <Row className="p-4">
-          <h1 className="text-center mb-4">Calculadora de Consumos</h1>
-          <ConsumptionTable
-            consumptions={consumptions}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-            onAddNew={() => {
-              setSelectedConsumption(null);
-              setShowForm(true);
-            }}
-          />
-          {consumptions.length > 0 && consumptions.length < maxConsumptions && (
-            <Button variant="primary" onClick={() => setShowForm(true)} className="mb-3">
-              + Nuevo
-            </Button>
-          )}
-          <ConsumptionForm
-            show={showForm}
-            onHide={() => {
-              setShowForm(false);
-              setSelectedConsumption(null);
-              setSelectedIndex(null);
-            }}
-            onSubmit={handleSubmit}
-            consumption={selectedConsumption}
-            consumptions={consumptions}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            maxConsumptions={maxConsumptions}
-            selectedIndex={selectedIndex} // <-- Añade esta línea
-          />
-        </Row>
-      </Container>
+      <h1 className="text-center mb-4">Calculadora de Consumos</h1>
+      <ConsumptionTable
+        consumptions={consumptions}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        onAddNew={() => {
+          setSelectedConsumption(null);
+          setShowForm(true);
+        }}
+      />
+      {/* {consumptions.length > 0 && consumptions.length < maxConsumptions && (
+        <Button variant="primary" onClick={() => setShowForm(true)} className="mb-3">
+          + Nuevo
+        </Button>
+      )} */}
+      <ConsumptionForm
+        show={showForm}
+        onHide={() => {
+          setShowForm(false);
+          setSelectedConsumption(null);
+          setSelectedIndex(null);
+        }}
+        onSubmit={handleSubmit}
+        consumption={selectedConsumption}
+        consumptions={consumptions}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+        maxConsumptions={maxConsumptions}
+        selectedIndex={selectedIndex} // <-- Añade esta línea
+      />
     </header>
   );
 }

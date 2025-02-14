@@ -24,11 +24,17 @@ const ConsumptionForm = ({  show,
 
   // Función para obtener el siguiente mes
   const getNextMonth = () => {
-    if (consumptions.length === 0) return 'Enero'; // Si no hay consumos, empezar con Enero
-    const lastMonth = consumptions[consumptions.length - 1].month;
-    const lastIndex = months.indexOf(lastMonth);
-    return months[(lastIndex + 1) % 12]; // Circular para volver a Enero después de Diciembre
-  };
+  if (consumptions.length === 0) {
+    // Si es el primer consumo, obtener mes actual
+    const currentDate = new Date();
+    const currentMonthIndex = currentDate.getMonth(); // 0 (Enero) - 11 (Diciembre)
+    return months[currentMonthIndex];
+  }
+  // Lógica existente para meses siguientes
+  const lastMonth = consumptions[consumptions.length - 1].month;
+  const lastIndex = months.indexOf(lastMonth);
+  return months[(lastIndex + 1) % 12];
+};
 
   useEffect(() => {
     if (consumption) {
@@ -52,13 +58,15 @@ const ConsumptionForm = ({  show,
       alert('Todos los campos son obligatorios.');
       return;
     }
+    const numericConsumption = parseFloat(consumptionValue);
+    const numericPrice = parseFloat(price);
 
     // Envía los datos del formulario al componente padre
     onSubmit({
       id, // Incluye el ID en los datos enviados
-      consumption: consumptionValue,
+      consumption: numericConsumption,
       month,
-      price: parseFloat(price),
+      price: numericPrice,
     });
 
     if (!consumption && consumptions.length + 1 < maxConsumptions) {
@@ -82,16 +90,6 @@ const ConsumptionForm = ({  show,
       <Modal.Body>
         <Form>
           <Form.Group>
-            <Form.Label>Consumo (kWh)</Form.Label>
-            <Form.Control
-              type="number"
-              value={consumptionValue}
-              step="0.01"
-              onChange={(e) => setConsumptionValue(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group>
             <Form.Label>Mes</Form.Label>
             <Form.Select
               value={month}
@@ -105,6 +103,16 @@ const ConsumptionForm = ({  show,
                 </option>
               ))}
             </Form.Select>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Consumo (kWh)</Form.Label>
+            <Form.Control
+              type="number"
+              value={consumptionValue}
+              step="0.01"
+              onChange={(e) => setConsumptionValue(e.target.value)}
+              required
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Precio (kWh)</Form.Label>
