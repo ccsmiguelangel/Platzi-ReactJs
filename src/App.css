@@ -13,3 +13,46 @@
   border:solid black 1px;
   border-collapse: separate;
 }
+css
+Copy
+/* App.css */
+.average-row {
+  background-color: rgba(75, 192, 192, 1) !important;
+}
+
+.average-row td {
+  border-top: 2px solid #666;
+}
+
+.input-table {
+  width: 100%;
+  margin: 2rem 0;
+  border-collapse: collapse;
+}
+
+.input-table td, .input-table th {
+  padding: 12px;
+  border: 1px solid #444;
+}
+
+.input-table input {
+  width: 100px;
+  padding: 8px;
+  background: #222;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+.chart-container {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+.rate-selector select {
+  background: #333;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 6px;
+}

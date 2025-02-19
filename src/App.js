@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Button, Container, Row } from 'react-bootstrap';
 import ConsumptionTable from './components/ConsumptionTable';
 import ConsumptionForm from './components/ConsumptionForm';
 
@@ -64,7 +63,7 @@ function App() {
   };
 
   return (
-    <header className="App-header">
+    <header className="App-header py-3 d-flex">
       <h1 className="text-center mb-4">Calculadora de Consumos</h1>
       <ConsumptionTable
         consumptions={consumptions}

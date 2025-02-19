@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Container, Row, Col, Table, Form, Button, Alert } from 'react-bootstrap';
-import { BsFillPencilFill, BsFillTrash3Fill } from 'react-icons/bs';
+import { Container, Row, Col, Table, Form, Button, Alert, Image } from 'react-bootstrap';
+import { BsFillPencilFill, BsFillTrash3Fill, BsFillInfoCircleFill} from 'react-icons/bs';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
@@ -32,13 +32,13 @@ const ConsumptionTable = ({ consumptions, onDelete, onEdit, onAddNew }) => {
   const calculateProjection = () => {
     const currentAverage = consumptions.reduce((acc, curr) => 
       acc + (curr.consumption * curr.price), 0) / consumptions.length;
-    
+
     return Array.from({length: 25}, (_, i) => 
-      Number((currentAverage * Math.pow(1.06, i + 1)).toFixed(2))
+      Number((currentAverage * Math.pow(1.06, i)).toFixed(2))
     );
   };
 
-  // Configuración del gráfico
+  // Configuración del gráfico  
   const chartData = {
     labels: Array.from({length: 25}, (_, i) => i + 1),
     datasets: [{
@@ -80,8 +80,17 @@ const ConsumptionTable = ({ consumptions, onDelete, onEdit, onAddNew }) => {
             <Container>
               <Row className="justify-content-center">
                 <Col className="col-lg-8">
+                  <Image src="consumptions-example.png" fluid rounded className="mb-3 border-none"/>
                   <Alert variant="light">
-                    <Alert.Heading className='mb-0'>Añade los Consumos del Bill de Luz del Cliente</Alert.Heading>
+                    <Alert.Heading className='mb-0'><BsFillInfoCircleFill className="mx-3 align-center" /><b>Añade los Consumos del Bill de Luz del Cliente</b></Alert.Heading>
+                    <hr />
+                    <p className="mb-0 text-start px-3">
+                      <b>Coloca:</b>
+                      <ul>
+                        <li>Consumo Mensual por kWh "Recuadro Rojo en Imagen"</li>
+                        <li>Precio Mensual kWh "Circulo Azúl en Imagen"</li>
+                      </ul>
+                    </p>
                   </Alert>
                   <Button 
                     variant="btn btn-outline-light w-100 py-2" 
@@ -138,7 +147,7 @@ const ConsumptionTable = ({ consumptions, onDelete, onEdit, onAddNew }) => {
               </Row>
             </Container>
             <Container fluid>
-              <Table striped bordered hover variant="dark" className="rounded">
+              <Table striped responsive bordered hover variant="dark" className="rounded">
                 <thead>
                   <tr>
                     <th>Mes</th>
@@ -164,7 +173,7 @@ const ConsumptionTable = ({ consumptions, onDelete, onEdit, onAddNew }) => {
                       </td>
                     </tr>
                   ))}
-                  <tr className="average-row">
+                  <tr className="average-row table-light">
                     <td><strong>Promedios:</strong></td>
                     <td>{averages.consumption.toFixed(2)} kWh</td>
                     <td>${averages.price.toFixed(2)}</td>
@@ -210,6 +219,9 @@ const ConsumptionTable = ({ consumptions, onDelete, onEdit, onAddNew }) => {
             data={chartData} 
             options={chartOptions} 
           />
+          <Alert variant="light d-flex d-lg-none">
+            <Alert.Heading className='mb-0'><BsFillInfoCircleFill className="mx-3 align-center" /><b>Dale clic a la barra para saber el precio especifico</b></Alert.Heading>
+          </Alert>
         </div>
       )}
     </div>
